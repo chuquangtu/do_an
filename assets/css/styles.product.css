@@ -1,0 +1,31 @@
+.prd{
+	background: #EEEEEE;
+	height: 250px;
+	border: 1px solid #b3b3cc;
+	border-radius: 5px;
+	position: relative;
+	text-align: center;
+}
+.prd .img_product{ 
+	width: 220px;
+	height:170px; 
+	margin:-20px 14px 0px 15px;
+	-webkit-box-shadow: 10px 10px 28px -4px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 28px -4px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 28px -4px rgba(0,0,0,0.75);
+	position: absolute;
+	border-radius: 15px;
+}
+.img_product img{
+	width: 220px;
+	height: 170px;
+	border-radius: 15px;
+}
+.prd a{
+	text-decoration: none;
+	color: #024
+}
+.prd a i{
+	line-height: 350px;	
+	display: none;
+}
