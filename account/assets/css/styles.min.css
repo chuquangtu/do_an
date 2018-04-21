@@ -256,9 +256,6 @@
 			margin-top: 6px;
 			float: left;
 		}
-		footer{
-			background: lightblue;
-		}
 		navbar-light{
 			line-height: 50px;
 		}
@@ -319,10 +316,12 @@
 			color: #80002a;
 			display: block;
 		}
-		.infor-user:hover .dropdown-content{
+		.infor-user:click .dropdown-content{
 			display: block;
 		}
-		
+		.infor-user:hover{
+			cursor: pointer;
+		}
 
 
 		

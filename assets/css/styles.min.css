@@ -1,3 +1,16 @@
+footer {
+    padding: 40px 0;
+}
+input[type=number]#phone::-webkit-inner-spin-button,
+input[type=number]#phone::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+ul#alert_signup{
+    margin: 0;
+}
 .footer-basic{
 	padding:40px 0;
 	background-color:#fff;
@@ -235,7 +248,7 @@
 			width: 300px;
 			margin:auto;
 		}
-		#create_account #fullname,#email,#phone,#gender,#datepicker,#username,#password,#repassword {
+		#create_account #fullname,#email,#phone,#gender,#birthday,#username,#password,#repassword {
 			border: 2px solid silver;
 		}
 		.search{
@@ -257,9 +270,6 @@
 			float: left;
 		}
 		
-		footer{
-			background: lightblue;
-		}
 		navbar-light{
 			line-height: 50px;
 		}
@@ -287,5 +297,194 @@
 		.caption h4{
 			margin-top: 10px;
 		}
+		.navbar-nav-right{
+			margin-left: -20px;
+			margin-top: 30px;
+		}
+		.navbar-nav-right .infor-user img{
+			width: 15px;
+			margin: 0px 5px 6px 5px;
+		}
 		
-		
+		.infor-user .fa-caret-right{
+			transition: transform 0.2s ease-out;
+		}
+		.infor-user:hover .fa-caret-right{
+			transform: rotate(90deg);
+		}
+		.infor-user{
+			position: relative;
+			display: inline-table;
+		}
+		.infor-user .dropdown-content{
+			display: none;
+			position: absolute;
+			width: 130px;
+			height: 100px;
+			z-index: 1;
+			text-align: left;
+			background: #FFFFFF;
+		}
+		.infor-user .dropdown-content a{
+			width: 150px;
+			height: 25px;
+			color: #80002a;
+			display: block;
+		}
+		.infor-user:click .dropdown-content{
+			display: block;
+		}
+		.infor-user:hover{
+			cursor: pointer;
+		}
+		.btn-signup:hover {
+    color: #fff;
+    background-color: transparent;
+    border-color: #007bff
+}
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,900&subset=vietnamese');
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,600,700,900');
+
+.login-form img {
+    display: block;
+    max-width: 100%;
+}
+
+.login-form a {
+    text-decoration: none;
+}
+
+.login-form {
+    font-size: 62.5%;
+}
+
+.login-form {
+    font-family: "Fira Sans", sans-serif;
+    background-color: #e9e7fc;
+    font-weight: 400;
+}
+
+.login-form .btn {
+    padding: 1.5rem 2.5rem;
+    color: white;
+    border-radius: 4px;
+    border: 0;
+    cursor: pointer;
+    box-shadow: none;
+    outline: none;
+    transition: background-color .2s linear;
+}
+
+.btn--primary {
+    background-color: #445ae3;
+}
+
+.btn--primary:hover {
+    background-color: #f469fd;
+}
+
+.btn--secondary {
+    background-color: #f469fd;
+}
+
+.btn--secondary:hover {
+    background-color: #445ae3;
+}
+
+.login-form {
+    width: 27.5rem;
+    overflow: hidden;
+    border-radius: 2rem;
+    background-color: #fff;
+    margin: 5rem auto;
+    padding: 2rem 3rem;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #0d0e1c;
+    box-shadow: 0 1rem 4rem rgba(13, 14, 28, 0.35);
+    background-image: url("https://image.ibb.co/cLSkfH/dating_bgd.png");
+    background-repeat: no-repeat;
+    background-size: 110%;
+    background-position: -1rem -1rem;
+}
+
+@media only screen and (max-width: 23.75em) {
+    .login-form {
+        width: auto;
+        margin: 2.5rem 1rem;
+    }
+}
+
+.login-logo {
+    margin-top: 4rem;
+    width: 100%;
+    text-align: center;
+}
+
+.login-logo img {
+    margin: 0 auto 1.5rem;
+}
+
+.form-login {
+    margin-top: 4.5rem;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    width: 100%;
+}
+
+.form-login > * {
+    width: 100%;
+    font-family: "Fira Sans", sans-serif;
+}
+
+.form-input {
+    border: 0;
+    border-bottom: 1px solid #e9e7fc;
+    padding: .5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: none;
+    outline: none;
+    color: #0d0e1c;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.form-input::-webkit-input-placeholder {
+    color: #0d0e1c;
+}
+
+.form-input:-ms-input-placeholder {
+    color: #0d0e1c;
+}
+
+.form-input::-ms-input-placeholder {
+    color: #0d0e1c;
+}
+
+.form-input::placeholder {
+    color: #0d0e1c;
+}
+
+.form-forgot-pwd {
+    display: block;
+    margin-top: 1.5rem;
+    color: #88879a;
+    transition: color .2s ease-in;
+}
+
+.form-forgot-pwd:hover {
+    color: #f469fd;
+}
+
+.form-footer {
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}

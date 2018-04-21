@@ -1,71 +1,120 @@
+<?php
+	session_start();
+	if(!isset($_SESSION)) header("location: login.php");
+	require '../libs/config.php';
+	connect_db();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<link rel="icon" href="assets/img/meeting.jpg">
+	<link rel="icon" href="../assets/img/meeting.jpg">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Thế giới công nghệ</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="assets/css/infor-user.css?v=1.0">    
+	<link rel="stylesheet" href="../assets/css/infor-user.css">
+	<link rel="stylesheet" href="../assets/css/styles.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/css/bootstrap-datetimepicker.min.css">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body style="height: 650px;">
+<nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="margin:-0;margin-top:-25px;">
+	<div class="container">
+		<a class="navbar-brand" href="#">
+			<img src="../assets/img/meeting.jpg" class="img-responsive logo-item">
+		</a>
+		<button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse"
+		     id="navcol-1">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item" role="presentation"><a class="nav-link" href="index.php">Trang chủ</a></li>
+				<li class="nav-item" role="presentation"><a class="nav-link" href="../product.php">Sản phẩm</a></li>
+				<li class="nav-item" role="presentation"><a class="nav-link" href="#">Tin tức</a></li>
+				<li class="nav-item" role="presentation"><a class="nav-link" href="#">Giới thiệu</a></li>
+				<li class="nav-item" role="presentation"><a class="nav-link" href="#">Cơ hội đầu tư</a></li>
+
+			</ul>
+			<ul class="navbar-nav-right">
+				<?php echo '
+					<span class="infor-user">Xin chào <strong>' . $_SESSION["username"] . '</strong>
+						<img src="../assets/img/user/test.png" width="20"> 
+						<i class="fa fa-caret-right"></i>	
+						<div class="dropdown-content">
+							<a href="infor_user.php"><i class="fa fa-user"></i> Hồ sơ cá nhân</a>
+							<a href="infor_user.php#product_list"><i class="fa fa-product-hunt"></i> Sản phẩm</a>
+							<a href="infor_user.php#news_list"><i class="fa fa-newspaper-o"></i> Tin tức</a>
+							<a href="logout.php"><i class="fa fa-power-off"></i> Đăng xuất</a>
+						</div>				
+					</span>';?>
+			</ul>
+		</div>
+	</div>
+</nav>
 	<div class="container">
 		<div class="col-md-12">
-			<div class="col-md-4 col-xs-4 iphone">
+			<div class="col-md-5 col-xs-5 iphone">
 				<div class="col-md-11 screen">
 					<div class="col-md-12 device">
 						<i class="fa fa-signal"></i>
-						<span>Viettel</span>
+						<span>KHCN</span>
 						<i class="fa fa-battery-3" ></i>
 						<i class="fa fa-wifi"></i>
 					</div>
 					<div class="col-md-12 file">
-						<table class="table-hover">
+						<?php
+							$datauser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tbl_user WHERE username='".$_SESSION["username"]."'"));
+							$datauserinfo = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tbl_user_info WHERE id_user='".$datauser["id_user"]."'"));
+						?>
+						<table class="table-hover" cellpadding="5px;" style="font-size: 16px;">
 							<tr>
 								<td>ID</td>
 								<td>:</td>
-								<td> 1</td>
+								<td><?php echo $datauser["id_user"]?></td>
 							</tr>
 							<tr>
 								<td>Họ và tên</td>
 								<td>:</td>
-								<td> Nguyễn Văn A</td>
+								<td>
+									<?php echo $datauserinfo["full_name"]?>
+								</td>
 							</tr>
 							<tr>
 								<td>Giới tính</td>
 								<td>:</td>
-								<td> Nam</td>
+								<td><?php echo $datauserinfo["gender"] == "m" ? "Nam":"Nữ";?></td>
 							</tr>
 							<tr>
 								<td>Email</td>
 								<td>:</td>
-								<td> abc@gmail.com</td>
+								<td><?php echo $datauserinfo["email"]?></td>
 							</tr>
 							<tr>
 								<td>Phone</td>
 								<td>:</td>
-								<td> 0123456789</td>
+								<td> <?php echo 0 . $datauserinfo["phone"]?></td>
 							</tr>
 							<tr>
 								<td>Ngày sinh</td>
 								<td>:</td>
-								<td> 02/29/2000</td>
-							</tr>
-							<tr>
-								<td><a data-toggle="modal" href='#modal-id'>Đổi mật khẩu</a></td>
+								<td> <?php echo date('d/m/Y', strtotime($datauserinfo["birthday"]))?></td>
 							</tr>
 							<tr>
 								<td>Hình ảnh</td>
 								<td>:</td>
-								<td><img src="assets/img/004.jpg" style="width: 40px; height: 30px;"></td>
+								<td><img src="../assets/img/004.jpg" style="width: 40px; height: 30px;"></td>
 							</tr>
 							<tr>
-								<td><a href="#modal-id-1" data-toggle="modal">Đổi ảnh đại diện</a></td>
+								<td colspan="2"><a data-toggle="modal" href='#modal-id'>Đổi mật khẩu</a></td>
+							</tr>
+							<tr>
+								<td colspan="2"><a href="#modal-id-1" data-toggle="modal">Đổi ảnh đại diện</a></td>
 							</tr>
 						</table>
 					</div>
@@ -168,7 +217,7 @@
 						<tr>
 							<td>01</td>
 							<td>Thiết bị khử trùng XXX</td>
-							<td><img src="assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
+							<td><img src="../assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
 							<td>Đã hoàn thành</td>
 							<td>Đã duyệt</td>
 							<td>Sản phẩm trực tiếp</td>
@@ -178,7 +227,7 @@
 						<tr>
 							<td>02</td>
 							<td>Thiết bị chống cháy nổ XXX</td>
-							<td><img src="assets/img/005.jpg" style="width: 60px;height: 40px;"></td>
+							<td><img src="../assets/img/005.jpg" style="width: 60px;height: 40px;"></td>
 							<td>Đã hoàn thành</td>
 							<td>Chưa duyệt</td>
 							<td>Sản phẩm trực tiếp</td>
@@ -202,7 +251,7 @@
 						<tr>
 							<td>01</td>
 							<td>Thiết bị khử trùng XXX</td>
-							<td><img src="assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
+							<td><img src="../assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
 							<td>Đang sản xuất</td>
 							<td>Sản phẩm trực tiếp</td>
 							<td>Công ty ABC</td>
@@ -211,7 +260,7 @@
 						<tr>
 							<td>02</td>
 							<td>Thiết bị chống cháy nổ XXX</td>
-							<td><img src="assets/img/005.jpg" style="width: 60px;height: 40px;"></td>
+							<td><img src="../assets/img/005.jpg" style="width: 60px;height: 40px;"></td>
 							<td>Đang sản xuất</td>
 							<td>Sản phẩm trực tiếp</td>
 							<td>Nguyễn Văn S</td>
@@ -234,7 +283,7 @@
 						<tr>
 							<td>01</td>
 							<td>Thiết bị khử trùng XXX</td>
-							<td><img src="assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
+							<td><img src="../assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
 							<td>Ý tưởng</td>
 							<td>Sản phẩm trực tiếp</td>
 							<td>Công ty ABC</td>
@@ -243,7 +292,7 @@
 						<tr>
 							<td>02</td>
 							<td>Thiết bị chống cháy nổ XXX</td>
-							<td><img src="assets/img/005.jpg" style="width: 60px;height: 40px;"></td>
+							<td><img src="../assets/img/005.jpg" style="width: 60px;height: 40px;"></td>
 							<td>Ý tưởng</td>
 							<td>Sản phẩm trực tiếp</td>
 							<td>Nguyễn Văn S</td>
@@ -266,8 +315,8 @@
 					<br>
 					<select class="form-control" required name="product_license">
 						<option value="" style="color: gray">Sản phẩm có chứng nhận sở hữu trí tuệ ?</option>
-						<option>Có</option>
-						<option>Không</option>
+						<option value="">Có</option>
+						<option value="">Không</option>
 					</select>
 					<br>
 					<input type="date" name="product_deadline" class="form-control" placeholder="mm/dd/yyyy">
@@ -279,7 +328,13 @@
 						<option>Ý tưởng</option>
 					</select>
 					<br>
+					<div class="input-group">
 					<input type="text" name="product_expense" class="form-control" placeholder="Chi phí sản xuất">
+					<div class="input-group-prepend">
+				          <div class="input-group-text">VNĐ</div>
+				    </div>
+					</div>
+				    <br>
 					<br>
 					<input type="file" name="product_image" class="form-control" id="product_img" accept="image/*">
 					<br>
@@ -351,7 +406,7 @@
 								<tr>
 									<td>01</td>
 									<td>Thiết bị khử trùng XXX</td>
-									<td><img src="assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
+									<td><img src="../assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
 									<td>...</td>
 									<td>Đã duyệt</td>
 									<td>Trần Văn A</td>
@@ -360,7 +415,7 @@
 								<tr>
 									<td>02</td>
 									<td>Thiết bị khử trùng XXX</td>
-									<td><img src="assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
+									<td><img src="../assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
 									<td>...</td>
 									<td>Đã duyệt</td>
 									<td>Trần Văn B</td>
@@ -383,7 +438,7 @@
 								<tr>
 									<td>01</td>
 									<td>Thiết bị khử trùng XXX</td>
-									<td><img src="assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
+									<td><img src="../assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
 									<td>...</td>
 									<td>Chưa duyệt</td>
 									<td>Trần Văn B</td>
@@ -392,7 +447,7 @@
 								<tr>
 									<td>01</td>
 									<td>Thiết bị khử trùng XXX</td>
-									<td><img src="assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
+									<td><img src="../assets/img/004.jpg" style="width: 60px;height: 40px;"></td>
 									<td>...</td>
 									<td>Chưa duyệt</td>
 									<td>Trần Văn A</td>
@@ -426,15 +481,15 @@
 					</form>
 				</div>
 			</div>
+			<br>
+			<h4><a href=""></a></h4>
 		</div>
 		<br>
 		<br>
-	<script type="text/javascript" src="assets/ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="assets/ckeditor/ckfinder/ckfinder.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../assets/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="../assets/ckeditor/ckfinder/ckfinder.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-	<script type="text/javascript" src="assets/js/script.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="../assets/js/script.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
 	<script type="text/javascript">
 		CKEDITOR.replace( 'product_content');
@@ -495,7 +550,19 @@
 		$("#news_img").change(function(){
 			readURL1(this);
 		});
+        $(document).ready(function(){
+            $(".infor-user").click(function(){
+                $(".dropdown-content").css({"display":"block"});
+            });
+            $(".container").hover(function(){
+                $(".dropdown-content").css({"display":"none"});
+            });
+            $(".infor-user").dblclick(function(){
+                $(".dropdown-content").css({"display":"none"});
+            });
+
+        });
 	</script>
-</script>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci sed vel tenetur doloribus, itaque eveniet. Cumque eveniet quo obcaecati. Tempore vero aut ea rem magnam alias, obcaecati voluptate similique doloribus.
 </body>
 </html>
